@@ -1,5 +1,7 @@
 const express = require("express");
 const GiphyApiClient = require("giphy-js-sdk-core");
+const Twitter = require("twitter-lite");
+
 const secrets = require("../../secrets.json");
 
 const app = express();
@@ -19,7 +21,6 @@ async function searchGiphy(q, limit) {
     return res.data.map((gif) => {
         return {
             title: gif.title,
-            body: "",
             image: gif.images.original.url,
             url: gif.url,
             source: "giphy",
@@ -27,8 +28,41 @@ async function searchGiphy(q, limit) {
     });
 }
 
+const twitterClient = new Twitter({
+    bearer_token: secrets.TWITTER_BEARER_TOKEN,
+});
+
+function tweetImage(tweet) {
+    const entities = [tweet.extended_entities, tweet.entities];
+
+    for (let i = 0; i < entities.length; i += 1) {
+        if (entities[i] && entities[i].media && entities[i].media.length > 0) {
+            return entities[i].media[0].media_url_https;
+        }
+    }
+
+    return "";
+}
+
+async function searchTwitter(q, limit) {
+    const res = await twitterClient.get("search/tweets", {
+        q,
+        count: limit,
+    });
+
+    return res.statuses.map((tweet) => {
+        return {
+            body: tweet.text,
+            url: `https://twitter.com/${tweet.user.screen_name}/status/${tweet.id_str}`,
+            image: tweetImage(tweet),
+            source: "twitter",
+        };
+    });
+}
+
 const searchers = {
     giphy: searchGiphy,
+    twitter: searchTwitter,
 };
 
 app.get("/api/search", async (req, res) => {
