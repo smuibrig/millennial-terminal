@@ -1,23 +1,44 @@
-import React, { Component } from 'react';
-import './app.css';
-import ReactImage from './react.png';
+import React, { useState, useEffect } from "react";
+import "./app.css";
+import axios from "axios";
+import TwitterFeed from "./twitter-feed"; 
 
-export default class App extends Component {
-  state = { username: null };
 
-  componentDidMount() {
-    fetch('/api/getUsername')
-      .then(res => res.json())
-      .then(user => this.setState({ username: user.username }));
-  }
 
-  render() {
-    const { username } = this.state;
+export default function App(props) {
+    const [query, setInput] = useState("");
+    const [giphyData, setGiphyData] = useState("");
+    const [twitterData, setTwitterData] = useState("");
+
+    useEffect(() => {
+        if (query) {
+            let result;
+            (async () => {
+                try {
+                    result = await axios.get(`/api/search?q=${query}`);
+                } catch (err) {
+                    console.log(err);
+                }
+
+                console.log("Giphy: ", result.data.giphy);
+                console.log("Twitter: ", result.data.twitter);
+                if (result) {
+                   setGiphyData(result.data.giphy);
+                   setTwitterData(result.data.twitter)
+                }
+            })();
+            
+        }
+    }, [query]);
+
     return (
-      <div>
-        {username ? <h1>{`Hello ${username}`}</h1> : <h1>Loading.. please wait!</h1>}
-        <img src={ReactImage} alt="react" />
-      </div>
+        <div className="app">
+            <input
+                type="text"
+                onChange={(e) => setInput(e.target.value)}
+                placeholder="Search"
+            />
+           <TwitterFeed data={twitterData}/>
+        </div>
     );
-  }
 }

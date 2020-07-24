@@ -1,8 +1,20 @@
 h1 {
-  color: green;
+  color: white;
 }
 
 body {
   text-align: center;
   margin: auto;
+  background-color: rgb(69, 70, 70);
+  color: white; 
+}
+
+a {
+  color: white; 
+}
+
+input {
+  width: 80%; 
+  height:50px; 
+  font-size: 45px;
 }

@@ -65,11 +65,19 @@ const searchers = {
     twitter: searchTwitter,
 };
 
+function uniqueSources(sources) {
+    return Array.from(
+        new Set(
+            Object.keys(searchers)
+                .concat(sources)
+                .filter((s) => s)
+        )
+    ).sort((a, b) => a - b);
+}
+
 app.get("/api/search", async (req, res) => {
     const query = [].concat(req.query.q);
-    const sources = Array.from(new Set([].concat(req.query.src))).sort(
-        (a, b) => a - b
-    );
+    const sources = uniqueSources(req.query.sources);
 
     const data = await Promise.all(
         sources.map((src) => {
@@ -78,9 +86,7 @@ app.get("/api/search", async (req, res) => {
             }
             return Promise.resolve([]);
         })
-    ).catch((err) => {
-        console.log(err);
-    });
+    );
 
     const results = {};
     sources.forEach((src, i) => {
