@@ -51,12 +51,18 @@ async function searchTwitter(q, limit) {
     });
 
     return res.statuses.map((tweet) => {
-        return {
+        const card = {
             body: tweet.text,
             url: `https://twitter.com/${tweet.user.screen_name}/status/${tweet.id_str}`,
-            image: tweetImage(tweet),
             source: "twitter",
         };
+
+        const image = tweetImage(tweet);
+        if (image !== "") {
+            card.image = image;
+        }
+
+        return card;
     });
 }
 

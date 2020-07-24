@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from "react";
 import "./app.css";
 import axios from "axios";
-import TwitterFeed from "./twitter-feed";
-import GiphyFeed from "./giphy-feed";
+import Column from "./Column";
 
 export default function App(props) {
     const [query, setInput] = useState("");
-    const [giphyData, setGiphyData] = useState("");
-    const [twitterData, setTwitterData] = useState("");
+    const [data, setData] = useState({});
 
     useEffect(() => {
-        
         if (query) {
             let result;
             (async () => {
@@ -20,11 +17,8 @@ export default function App(props) {
                     console.log(err);
                 }
 
-                console.log("Giphy: ", result.data.giphy);
-                console.log("Twitter: ", result.data.twitter);
                 if (result) {
-                    setGiphyData(result.data.giphy);
-                    setTwitterData(result.data.twitter);
+                    setData(result.data);
                 }
             })();
         }
@@ -37,9 +31,10 @@ export default function App(props) {
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Search"
             />
-            <div className="feed-container">
-                <TwitterFeed data={twitterData} />
-                <GiphyFeed data={giphyData} />
+            <div className="container">
+                {Object.entries(data).map(([source, cards]) => (
+                    <Column cards={cards} source={source} />
+                ))}
             </div>
         </div>
     );
