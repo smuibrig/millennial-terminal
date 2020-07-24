@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from "react";
 import Loading from "./loading";
@@ -14,12 +15,12 @@ export default function TwitterFeed({ data }) {
     });
 
     if (loading === true) {
-        return <Loading />;
+        return <img className="logo-feed" src="/src/client/twitter-logo.png"/>;
     }
 
     return (
         <div className="feed">
-            <img src="/src/client/twitter-logo.png"/> 
+            <img className="logo-feed" src="/src/client/twitter-logo.png"/> 
             {data &&
                 data.map((tweet, index) => (
                     // eslint-disable-next-line react/no-array-index-key
