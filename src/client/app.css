@@ -18,3 +18,11 @@ input {
   height:50px; 
   font-size: 45px;
 }
+.logo-feed {
+  width: 50px;
+  height: auto;
+}
+.feed-container {
+  display: flex;
+  justify-content: space-evenly;
+}
