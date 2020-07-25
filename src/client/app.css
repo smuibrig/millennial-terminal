@@ -36,6 +36,8 @@ input {
 .column {
     flex: 1;
     border: 1px black solid;
+    height: 1000px; 
+    overflow-y: scroll;
 }
 
 .card {
@@ -69,4 +71,5 @@ a {
 
 .card {
     padding: 10px; 
+    
 }
