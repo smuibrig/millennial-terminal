@@ -18,11 +18,12 @@ export default function Column({ cards, source }) {
                     <div className={cardClassName} key={index}>
                         <a href={card.url} target="_blank" rel="noreferrer">
                             {card.image && <img src={card.image} alt="" />}
+                            <p>{card.user_display_name}</p>
+                            <p>{card.body}</p>
+                            <p>{card.created_at}</p>
                         </a>
-                        <p>{card.user} {card.body} {card.created_at}</p>
                     </div>
                 ))}
         </div>
     );
 }
-
