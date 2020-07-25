@@ -2,9 +2,11 @@ import React, { useState, useEffect } from "react";
 
 export default function Column({ cards, source }) {
     const [logoSource, setLogoSource] = useState("");
+    const [cardClassName, setCardClassName] = useState("card");
 
     useEffect(() => {
         setLogoSource(`src/client/${source}-logo.png`);
+        setCardClassName(`card ${source}`);
     }, [source]);
 
     return (
@@ -13,11 +15,14 @@ export default function Column({ cards, source }) {
             {cards &&
                 cards.map((card, index) => (
                     // eslint-disable-next-line react/no-array-index-key
-                    <div className="card" key={index}>
-                        <a href={card.url}>{card.body}</a>
-                        {card.image && <img src={card.image} alt="" />}
+                    <div className={cardClassName} key={index}>
+                        <a href={card.url} target="_blank" rel="noreferrer">
+                            {card.image && <img src={card.image} alt="" />}
+                        </a>
+                        <p>{card.user} {card.body} {card.created_at}</p>
                     </div>
                 ))}
         </div>
     );
 }
+

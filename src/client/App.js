@@ -32,8 +32,8 @@ export default function App(props) {
                 placeholder="Search"
             />
             <div className="container">
-                {Object.entries(data).map(([source, cards]) => (
-                    <Column cards={cards} source={source} />
+                {Object.entries(data).map(([source, cards], index) => (
+                    <Column cards={cards} source={source} key={index}/>
                 ))}
             </div>
         </div>
