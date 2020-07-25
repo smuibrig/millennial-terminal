@@ -23,29 +23,23 @@ async function searchGoodReads(q, limit) {
     });
 
     const books = res.search.results.work.map((book) => {
-        const dateData = [book.original_publication_year._, book.original_publication_month._, book.original_publication_day._]
+        const date = [
+            book.original_publication_year._,
+            book.original_publication_month._,
+            book.original_publication_day._,
+        ]
+            .filter((a) => a)
+            .join("-");
 
-        let date = '';  
-        
-        dateData.forEach((time) => {
-            if (time !== undefined && date === ''){
-                date += `${time}`; 
-            } else if (time !== undefined) {
-                date += `-${time}`;
-            }
-        }); 
-
-        const link = `https://www.goodreads.com/book/show/${book.best_book.id._}`;
-
-        const result = {
+        return {
             body: book.best_book.title,
             image: book.best_book.image_url,
-            url: link,
+            url: `https://www.goodreads.com/book/show/${book.best_book.id._}`,
             user_display_name: book.best_book.author.name,
+            user_url: `https://www.goodreads.com/author/show/${book.best_book.author.id._}`,
             created_at: date,
             source: "goodreads",
         };
-        return result;
     });
 
     return books.slice(0, limit);
