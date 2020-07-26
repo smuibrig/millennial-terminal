@@ -19,6 +19,7 @@
         "express": "^4.16.3",
         "giphy-js-sdk-core": "^1.0.6",
         "goodreads-api-node": "^0.0.11",
+        "newyorktimes": "0.0.2",
         "node-themoviedb": "^0.2.4",
         "react": "^16.5.2",
         "react-dom": "^16.5.2",

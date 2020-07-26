@@ -1,15 +1,44 @@
+/* eslint-disable no-restricted-syntax */
 /* eslint-disable camelcase */
 const express = require("express");
 const GiphyApiClient = require("giphy-js-sdk-core");
 const Twitter = require("twitter-lite");
 const goodreads = require("goodreads-api-node");
 const MovieDB = require("node-themoviedb");
+const axios = require("axios");
 
 const secrets = require("../../secrets.json");
 
 const app = express();
-
 app.use(express.static("dist"));
+
+async function searchNYT(q) {
+    let result;
+
+    try {
+        result = await axios.get(
+            `https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${q}&api-key=${secrets.NYT_KEY}`
+        );
+    } catch (err) {
+        console.log(err);
+    }
+
+    return result.data.response.docs.map((article) => {
+       
+
+        return {
+            body: article.abstract,
+            image: `https://www.nytimes.com/${article?.multimedia[0]?.url}`,
+            url: article.web_url,
+            user_display_name: article.headline.main,
+            user_url: article.web_url,
+            created_at: article.pub_date,
+            source: "NYT",
+        };
+    });
+
+
+}
 
 const mdbClient = new MovieDB(secrets.MOVIE_DB_KEY, {});
 
@@ -23,19 +52,19 @@ async function searchMovieDB(q, limit) {
         },
     });
 
-    return movies.map((movie) => {
-        console.log(movie);
-
+    const result = movies.map((movie) => {
         return {
-            body: movie.overview, 
+            body: movie.overview,
             image: `https://image.tmdb.org/t/p/original${movie.poster_path}`,
-            url: `https://www.themoviedb.org/movie/${movie.id}`, 
-            user_display_name: movie.title, 
+            url: `https://www.themoviedb.org/movie/${movie.id}`,
+            user_display_name: movie.title,
             user_url: `https://www.themoviedb.org/movie/${movie.id}`,
-            created_at: movie.release_date, 
+            created_at: movie.release_date,
             source: "movieDB",
         };
     });
+
+    return result.slice(0, limit);
 }
 
 const goodReadsClient = goodreads({
@@ -138,6 +167,7 @@ const searchers = {
     twitter: searchTwitter,
     goodReads: searchGoodReads,
     movieDB: searchMovieDB,
+    NYT: searchNYT,
 };
 
 function uniqueSources(sources) {
