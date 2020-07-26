@@ -1,8 +1,10 @@
+/* eslint-disable jsx-a11y/interactive-supports-focus */
 import React, { useState, useEffect } from "react";
 
 export default function Column({ cards, source }) {
     const [logoSource, setLogoSource] = useState("");
     const [cardClassName, setCardClassName] = useState("card");
+    const [showColumn, setColumn] = useState("show");
 
     useEffect(() => {
         setLogoSource(`src/client/${source}-logo.png`);
@@ -10,8 +12,16 @@ export default function Column({ cards, source }) {
     }, [source]);
 
     return (
-        <div className="column">
+        <div className="column" id={showColumn}>
             <img src={logoSource} className="logo-column" alt="Source logo" />
+            <div className="buttons">
+                <div className="button open" />
+                <button
+                    className="button closed"
+                    onClick={() => setColumn("hide")}
+                    type="submit"
+                />
+            </div>
             {cards &&
                 cards.map((card, index) => (
                     // eslint-disable-next-line react/no-array-index-key

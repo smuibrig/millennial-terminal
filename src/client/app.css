@@ -18,7 +18,7 @@ body {
 input {
     width: 100%;
     height: 50px;
-    font-size: 45px;
+    font-size: 45px; 
 }
 
 .logo-column {
@@ -72,4 +72,38 @@ a {
 .card {
     padding: 10px; 
     
+}
+
+.buttons {
+    display: flex; 
+    height: 30px; 
+    justify-content: flex-end;
+    align-items: center;
+    border: white solid 1px; 
+    padding-right: 5px;
+}
+
+.button {
+    border: none; 
+    display: flex;
+    height: 12px;
+    width: 12px;
+    border-radius: 50%;
+    margin: 2px; 
+    color: black; 
+    font-size: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+.open {
+    background-color: rgb(103, 191, 56);   
+}
+
+.closed {
+    background-color: red; 
+}
+
+#hide {
+    display: none; 
 }
