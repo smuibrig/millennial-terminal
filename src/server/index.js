@@ -3,12 +3,40 @@ const express = require("express");
 const GiphyApiClient = require("giphy-js-sdk-core");
 const Twitter = require("twitter-lite");
 const goodreads = require("goodreads-api-node");
+const MovieDB = require("node-themoviedb");
 
 const secrets = require("../../secrets.json");
 
 const app = express();
 
 app.use(express.static("dist"));
+
+const mdbClient = new MovieDB(secrets.MOVIE_DB_KEY, {});
+
+async function searchMovieDB(q, limit) {
+    const {
+        data: { results: movies },
+    } = await mdbClient.search.movies({
+        query: {
+            query: q,
+            page: 1,
+        },
+    });
+
+    return movies.map((movie) => {
+        console.log(movie);
+
+        return {
+            body: movie.overview, 
+            image: `https://image.tmdb.org/t/p/original${movie.poster_path}`,
+            url: `https://www.themoviedb.org/movie/${movie.id}`, 
+            user_display_name: movie.title, 
+            user_url: `https://www.themoviedb.org/movie/${movie.id}`,
+            created_at: movie.release_date, 
+            source: "movieDB",
+        };
+    });
+}
 
 const goodReadsClient = goodreads({
     key: secrets.GOOD_READS_KEY,
@@ -109,6 +137,7 @@ const searchers = {
     giphy: searchGiphy,
     twitter: searchTwitter,
     goodReads: searchGoodReads,
+    movieDB: searchMovieDB,
 };
 
 function uniqueSources(sources) {
@@ -128,7 +157,9 @@ app.get("/api/search", async (req, res) => {
     const data = await Promise.all(
         sources.map((src) => {
             if (searchers[src]) {
-                return searchers[src](query[0], 10);
+                return searchers[src](query[0], 10).catch((err) => {
+                    console.log(err);
+                });
             }
             return Promise.resolve([]);
         })
