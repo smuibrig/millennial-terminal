@@ -1,29 +1,40 @@
-h1 {
-    color: white;
-}
+@import url('https://fonts.googleapis.com/css2?family=Darker+Grotesque&family=Fira+Code:wght@300&family=Fira+Mono&family=Montserrat:wght@100&display=swap');
+
 
 body {
     text-align: center;
     margin: auto;
-    background-color:black;
-    color: white;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+    background-color: rgba(28,28,28);
 }
 
 .card p {
+    font-size: 15px;
     color: white;
-    font-size: 20px;
+    font-family: 'Darker Grotesque', sans-serif;
 }
 
-input {
+#keyWordInput[type=text] {
     width: 100%;
     height: 50px;
-    font-size: 45px; 
+    font-size: 43px;
+    background-color: rgba(45, 45 ,45 );
+    color: rgba(108, 108, 108); 
+    font-family: 'Darker Grotesque', sans-serif;
+}
+
+#keyWordInput[type=text]:focus, textarea:focus  {
+    outline: none; 
+}
+
+::placeholder{
+    color: rgba(108, 108, 108); 
+    font-family: 'Darker Grotesque', sans-serif;
 }
 
 .logo-column {
-    height: 50px;
+    height: 30px;
     width: auto;
+    padding-left: 5px;
 }
 
 .container {
@@ -35,19 +46,28 @@ input {
 
 .column {
     flex: 1;
-    border: 1px black solid;
-    height: 1000px; 
+}
+
+.cards {
+    height: 1200px; 
     overflow-y: scroll;
 }
 
 .card {
     flex: 1;
-    border: 1px white solid;
+    /* border: solid rgba(108, 108, 108)  1px; */
     min-height: 300px;
+    text-align: left;
 }
 
 .card img {
     width: 80%;
+    max-height: 400px;
+    object-fit: cover;
+}
+
+.card .giphy img {
+    width: 100%;
     max-height: 400px;
     object-fit: cover;
 }
@@ -78,8 +98,7 @@ a {
     display: flex; 
     height: 30px; 
     justify-content: flex-end;
-    align-items: center;
-    border: white solid 1px; 
+  
     padding-right: 5px;
 }
 
@@ -90,7 +109,6 @@ a {
     width: 12px;
     border-radius: 50%;
     margin: 2px; 
-    color: black; 
     font-size: 20px;
     justify-content: center;
     align-items: center;
@@ -107,3 +125,30 @@ a {
 #hide {
     display: none; 
 }
+
+.header {
+    display: flex; 
+    justify-content: space-between;
+    margin: 4px;
+}
+
+.tick-boxes {
+    display:flex; 
+    justify-content: space-evenly;
+    font-family: 'Darker Grotesque', sans-serif;
+    color:  rgba(108, 108, 108); 
+    font-size: 20px;
+    margin: 20px 0; 
+}
+
+
+
+
+/**
+Imported fonts to try out for styling 
+
+font-family: 'Darker Grotesque', sans-serif;
+font-family: 'Fira Code', monospace;
+font-family: 'Fira Mono', monospace;
+font-family: 'Montserrat', sans-serif;
+*/

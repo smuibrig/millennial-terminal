@@ -13,27 +13,35 @@ export default function Column({ cards, source }) {
 
     return (
         <div className="column" id={showColumn}>
-            <img src={logoSource} className="logo-column" alt="Source logo" />
-            <div className="buttons">
-                <div className="button open" />
-                <button
-                    className="button closed"
-                    onClick={() => setColumn("hide")}
-                    type="submit"
+            <div className="header">
+                <img
+                    src={logoSource}
+                    className="logo-column"
+                    alt="Source logo"
                 />
+                <div className="buttons">
+                    <div className="button open" />
+                    <button
+                        className="button closed"
+                        onClick={() => setColumn("hide")}
+                        type="submit"
+                    />
+                </div>
             </div>
-            {cards &&
-                cards.map((card, index) => (
-                    // eslint-disable-next-line react/no-array-index-key
-                    <div className={cardClassName} key={index}>
-                        <a href={card.url} target="_blank" rel="noreferrer">
-                            {card.image && <img src={card.image} alt="" />}
-                            <p>{card.user_display_name}</p>
-                            <p>{card.body}</p>
-                            <p>{card.created_at}</p>
-                        </a>
-                    </div>
-                ))}
+            <div className="cards">
+                {cards &&
+                    cards.map((card, index) => (
+                        // eslint-disable-next-line react/no-array-index-key
+                        <div className={cardClassName} key={index}>
+                            <a href={card.url} target="_blank" rel="noreferrer">
+                                {card.image && <img src={card.image} alt="" />}
+                                <p>{card.user_display_name}</p>
+                                <p>{card.body}</p>
+                                <p>{card.created_at}</p>
+                            </a>
+                        </div>
+                    ))}
+            </div>
         </div>
     );
 }

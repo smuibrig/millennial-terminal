@@ -24,20 +24,16 @@ async function searchNYT(q) {
     }
 
     return result.data.response.docs.map((article) => {
-       
-
         return {
-            body: article.abstract,
+            body: article?.abstract,
             image: `https://www.nytimes.com/${article?.multimedia[0]?.url}`,
-            url: article.web_url,
-            user_display_name: article.headline.main,
-            user_url: article.web_url,
-            created_at: article.pub_date,
+            url: article?.web_url,
+            user_display_name: article?.headline.main,
+            user_url: article?.web_url,
+            created_at: article?.pub_date,
             source: "NYT",
         };
     });
-
-
 }
 
 const mdbClient = new MovieDB(secrets.MOVIE_DB_KEY, {});
@@ -170,19 +166,19 @@ const searchers = {
     NYT: searchNYT,
 };
 
-function uniqueSources(sources) {
-    return Array.from(
-        new Set(
-            Object.keys(searchers)
-                .concat(sources)
-                .filter((s) => s)
-        )
-    ).sort((a, b) => a - b);
+function dedup(sources) {
+    return Array.from(new Set(sources.filter((s) => s)));
 }
 
 app.get("/api/search", async (req, res) => {
     const query = [].concat(req.query.q);
-    const sources = uniqueSources(req.query.sources);
+
+    let sources = Object.keys(searchers);
+    if (req.query.sources && req.query.sources.length > 0) {
+        sources = dedup(req.query.sources);
+    }
+
+    sources.sort();
 
     const data = await Promise.all(
         sources.map((src) => {
