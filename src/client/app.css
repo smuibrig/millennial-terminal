@@ -1,30 +1,32 @@
-@import url('https://fonts.googleapis.com/css2?family=Darker+Grotesque&family=Fira+Code:wght@300&family=Fira+Mono&family=Montserrat:wght@100&display=swap');
-
+@import url("https://fonts.googleapis.com/css2?family=Darker+Grotesque&family=Fira+Code:wght@300&family=Fira+Mono&family=Montserrat:wght@100&display=swap");
 
 body {
     text-align: center;
     margin: auto;
-    background-color: rgba(28,28,28);
+    background-color: rgba(28, 28, 28);
+}
+
+body * {
+    font-family: "Darker Grotesque", sans-serif;
 }
 
 /*********** Search Bar ***************/
 
-#keyWordInput[type=text] {
+#keyWordInput[type="text"] {
     width: 100%;
     height: 50px;
     font-size: 43px;
-    background-color: rgba(45, 45 ,45 );
-    color: rgba(108, 108, 108); 
-    font-family: 'Darker Grotesque', sans-serif;
+    background-color: rgba(45, 45, 45);
+    color: rgba(108, 108, 108);
 }
 
-#keyWordInput[type=text]:focus, textarea:focus  {
-    outline: none; 
+#keyWordInput[type="text"]:focus,
+textarea:focus {
+    outline: none;
 }
 
-::placeholder{
-    color: rgba(108, 108, 108); 
-    font-family: 'Darker Grotesque', sans-serif;
+::placeholder {
+    color: rgba(108, 108, 108);
 }
 
 /*************** Column *******************/
@@ -47,38 +49,36 @@ body {
 }
 
 #hide {
-    display: none; 
+    display: none;
 }
 
 .header {
-    display: flex; 
+    display: flex;
     justify-content: center;
     margin: 4px;
 }
 
 .tick-boxes {
-    display:flex; 
+    display: flex;
     justify-content: space-evenly;
-    font-family: 'Darker Grotesque', sans-serif;
-    color:  rgba(108, 108, 108); 
+    color: rgba(108, 108, 108);
     font-size: 20px;
-    margin: 20px 0; 
+    margin: 20px 0;
 }
 
 /************* Card  ************/
 
 .cards {
-    height: 1200px; 
+    height: 1200px;
     overflow-y: scroll;
-    font-family: 'Darker Grotesque', sans-serif;
 }
 
 .card {
     flex: 1;
-    border-bottom: solid rgba(108, 108, 108)  1px; 
+    border-bottom: solid rgba(108, 108, 108) 1px;
     box-shadow: 2px 2px 2px 1px rgba(240, 239, 239, 0.2);
     min-height: 300px;
-    padding: 10px; 
+    padding: 10px;
 }
 
 .card img {
@@ -89,12 +89,12 @@ body {
 
 .giphy img {
     width: 100%;
-    height: auto; 
+    height: auto;
 }
 
 .goodReads img {
     width: 100px;
-    height: auto; 
+    height: auto;
     align-self: center;
 }
 
@@ -103,34 +103,31 @@ a {
 }
 
 .name {
-    color: white; 
-    font-size: 25px; 
+    color: white;
+    font-size: 25px;
     text-align: center;
 }
 
 .body {
-    color: rgb(198, 198, 198); 
-    font-size: 19px; 
+    color: rgb(198, 198, 198);
+    font-size: 19px;
     text-align: justify;
     padding: 20px;
 }
 
 .created-at {
-    color: rgb(172,198,159); 
-    font-size: 15px; 
+    color: rgb(172, 198, 159);
+    font-size: 15px;
 }
-
 
 #twitter-profile-pic {
     border-radius: 50%;
     height: 50px;
     width: 50px;
     border: 1px white solid;
-    float: left; 
+    float: left;
     margin-left: 20px;
 }
-
-
 
 /**
 Imported fonts to try out for styling 

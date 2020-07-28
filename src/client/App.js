@@ -1,72 +1,37 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, Route } from "react-router-dom";
 import "./app.css";
-import axios from "axios";
-import Column from "./Column";
-import Grid from "./Grid";
+import ColumnsPage from "./ColumnsPage";
+import GridPage from "./GridPage";
 
 export default function App(props) {
-    const [query, setInput] = useState("");
+    const [query, setQuery] = useState("");
     const [data, setData] = useState({});
-    const [twitter, setTwitter] = useState(null);
-    const [giphy, setGiphy] = useState(null);
-    const [goodReads, setGoodreads] = useState(null);
-    const [NYC, setNYC] = useState(null);
-    const [movieDB, setMovieDB] = useState(null);
-
-    useEffect(() => {
-        const sources = [twitter, giphy, goodReads, NYC, movieDB].filter(
-            (a) => a
-        );
-
-        const timer = setTimeout(() => {
-            if (query) {
-                let result;
-                (async () => {
-                    try {
-                        result = await axios.get("/api/search", {
-                            params: {
-                                q: query,
-                                sources,
-                            },
-                        });
-                    } catch (err) {
-                        console.log(err);
-                    }
-
-                    if (result) {
-                        setData(result.data);
-                    }
-                })();
-            }
-        }, 300);
-        return () => clearTimeout(timer);
-    }, [query]);
 
     return (
         <div className="app">
-            <input
-                id="keyWordInput"
-                type="text"
-                placeholder="Search"
-                onChange={(e) => setInput(e.target.value)}
-            />
-            <div className="container">
-                {Object.entries(data).map(([source, cards], index) => (
-                    <Column cards={cards} source={source} key={index} />
-                ))}
-            </div>
             <BrowserRouter>
                 <Route
                     exact
-                    path="/grid"
+                    path="/"
                     render={() => (
-                        <Grid
+                        <ColumnsPage
                             query={query}
-                            source={data.source}
-                            key={props.match.url}
-                            match={props.match}
-                            history={props.history}
+                            setQuery={setQuery}
+                            data={data}
+                            setData={setData}
+                        />
+                    )}
+                />
+                <Route
+                    exact
+                    path="/grid/:source"
+                    render={() => (
+                        <GridPage
+                            query={query}
+                            setQuery={setQuery}
+                            data={data}
+                            setData={setData}
                         />
                     )}
                 />

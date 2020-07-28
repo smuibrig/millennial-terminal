@@ -1,15 +1,18 @@
 /* eslint-disable jsx-a11y/interactive-supports-focus */
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import Card from "./Card";
 
 export default function Column({ cards, source }) {
     const [logoSource, setLogoSource] = useState("");
     const [cardClassName, setCardClassName] = useState("card");
     const [twitter, setTwitter] = useState(false);
+    const [gridLinkURL, setGridLinkURL] = useState("/grid");
 
     useEffect(() => {
         setLogoSource(`src/client/${source}-logo.png`);
         setCardClassName(`card ${source}`);
+        setGridLinkURL(`/grid/${source}`);
 
         if (source === "twitter") {
             setTwitter(true);
@@ -19,7 +22,7 @@ export default function Column({ cards, source }) {
     return (
         <div className="column">
             <div className="header">
-                <Link to="/get">
+                <Link to={gridLinkURL}>
                     <img
                         src={logoSource}
                         className="logo-column"
@@ -29,43 +32,14 @@ export default function Column({ cards, source }) {
             </div>
             <div className="cards">
                 {cards &&
+                    cards.length > 0 &&
                     cards.map((card, index) => (
-                        // eslint-disable-next-line react/no-array-index-key
-                        <div className={cardClassName} key={index}>
-                            <a href={card.url} target="_blank" rel="noreferrer">
-                                {card.image && <img src={card.image} alt="" />}
-                            </a>
-
-                            {twitter && (
-                                <div>
-                                    <a href={card.user_url}>
-                                        <img
-                                            id="twitter-profile-pic"
-                                            src={card.user_image}
-                                            alt=""
-                                        />
-                                        <p className="name">
-                                            {card.user_display_name}
-                                        </p>
-                                    </a>
-                                </div>
-                            )}
-
-                            {!twitter && (
-                                <a href={card.user_url}>
-                                    <p className="name">
-                                        {card.user_display_name}
-                                    </p>
-                                </a>
-                            )}
-
-                            <a href={card.url} target="_blank" rel="noreferrer">
-                                <p className="body">{card.body}</p>
-                            </a>
-
-                            <p className="created-at">{card.created_at}</p>
-                        </div>
+                        <Card card={card} index={index} source={source} />
                     ))}
+
+                {(!cards || cards.length == 0) && (
+                    <p className="body">No results found in {source}.</p>
+                )}
             </div>
         </div>
     );
