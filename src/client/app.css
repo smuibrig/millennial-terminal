@@ -7,11 +7,7 @@ body {
     background-color: rgba(28,28,28);
 }
 
-.card p {
-    font-size: 15px;
-    color: white;
-    font-family: 'Darker Grotesque', sans-serif;
-}
+/*********** Search Bar ***************/
 
 #keyWordInput[type=text] {
     width: 100%;
@@ -31,6 +27,8 @@ body {
     font-family: 'Darker Grotesque', sans-serif;
 }
 
+/*************** Column *******************/
+
 .logo-column {
     height: 30px;
     width: auto;
@@ -48,87 +46,13 @@ body {
     flex: 1;
 }
 
-.cards {
-    height: 1200px; 
-    overflow-y: scroll;
-}
-
-.card {
-    flex: 1;
-    /* border: solid rgba(108, 108, 108)  1px; */
-    min-height: 300px;
-    text-align: left;
-}
-
-.card img {
-    width: 80%;
-    max-height: 400px;
-    object-fit: cover;
-}
-
-.card .giphy img {
-    width: 100%;
-    max-height: 400px;
-    object-fit: cover;
-}
-
-.card.twitter {
-
-}
-
-.card.giphy {
-
-}
-
-.goodReads img {
-    width: 100px;
-    height: auto; 
-}
-
-a {
-    text-decoration: none;
-}
-
-.card {
-    padding: 10px; 
-    
-}
-
-.buttons {
-    display: flex; 
-    height: 30px; 
-    justify-content: flex-end;
-  
-    padding-right: 5px;
-}
-
-.button {
-    border: none; 
-    display: flex;
-    height: 12px;
-    width: 12px;
-    border-radius: 50%;
-    margin: 2px; 
-    font-size: 20px;
-    justify-content: center;
-    align-items: center;
-}
-
-.open {
-    background-color: rgb(103, 191, 56);   
-}
-
-.closed {
-    background-color: red; 
-}
-
 #hide {
     display: none; 
 }
 
 .header {
     display: flex; 
-    justify-content: space-between;
+    justify-content: center;
     margin: 4px;
 }
 
@@ -141,6 +65,70 @@ a {
     margin: 20px 0; 
 }
 
+/************* Card  ************/
+
+.cards {
+    height: 1200px; 
+    overflow-y: scroll;
+    font-family: 'Darker Grotesque', sans-serif;
+}
+
+.card {
+    flex: 1;
+    border-bottom: solid rgba(108, 108, 108)  1px; 
+    box-shadow: 2px 2px 2px 1px rgba(240, 239, 239, 0.2);
+    min-height: 300px;
+    padding: 10px; 
+}
+
+.card img {
+    width: 95%;
+    max-height: 400px;
+    object-fit: cover;
+}
+
+.giphy img {
+    width: 100%;
+    height: auto; 
+}
+
+.goodReads img {
+    width: 100px;
+    height: auto; 
+    align-self: center;
+}
+
+a {
+    text-decoration: none;
+}
+
+.name {
+    color: white; 
+    font-size: 25px; 
+    text-align: center;
+}
+
+.body {
+    color: rgb(198, 198, 198); 
+    font-size: 19px; 
+    text-align: justify;
+    padding: 20px;
+}
+
+.created-at {
+    color: rgb(172,198,159); 
+    font-size: 15px; 
+}
+
+
+#twitter-profile-pic {
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+    border: 1px white solid;
+    float: left; 
+    margin-left: 20px;
+}
 
 
 

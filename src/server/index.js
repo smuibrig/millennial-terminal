@@ -12,7 +12,7 @@ const secrets = require("../../secrets.json");
 const app = express();
 app.use(express.static("dist"));
 
-async function searchNYT(q) {
+async function searchNYT(q, limit) {
     let result;
 
     try {
@@ -23,17 +23,22 @@ async function searchNYT(q) {
         console.log(err);
     }
 
-    return result.data.response.docs.map((article) => {
+    
+
+    const response = result.data.response.docs.map((article) => {
+        const date = new Date(article?.pub_date).toDateString();
+
         return {
             body: article?.abstract,
             image: `https://www.nytimes.com/${article?.multimedia[0]?.url}`,
             url: article?.web_url,
             user_display_name: article?.headline.main,
             user_url: article?.web_url,
-            created_at: article?.pub_date,
+            created_at: date,
             source: "NYT",
         };
     });
+    return response.slice(0, limit);
 }
 
 const mdbClient = new MovieDB(secrets.MOVIE_DB_KEY, {});
@@ -49,13 +54,14 @@ async function searchMovieDB(q, limit) {
     });
 
     const result = movies.map((movie) => {
+        const date = new Date(movie.release_date).toDateString();
         return {
             body: movie.overview,
             image: `https://image.tmdb.org/t/p/original${movie.poster_path}`,
             url: `https://www.themoviedb.org/movie/${movie.id}`,
             user_display_name: movie.title,
             user_url: `https://www.themoviedb.org/movie/${movie.id}`,
-            created_at: movie.release_date,
+            created_at: date,
             source: "movieDB",
         };
     });
@@ -83,6 +89,9 @@ async function searchGoodReads(q, limit) {
         ]
             .filter((a) => a)
             .join("-");
+        
+        const normalisedDate = new Date(date).toDateString();
+
 
         return {
             body: book.best_book.title,
@@ -90,7 +99,7 @@ async function searchGoodReads(q, limit) {
             url: `https://www.goodreads.com/book/show/${book.best_book.id._}`,
             user_display_name: book.best_book.author.name,
             user_url: `https://www.goodreads.com/author/show/${book.best_book.author.id._}`,
-            created_at: date,
+            created_at: normalisedDate,
             source: "goodreads",
         };
     });
@@ -108,7 +117,10 @@ async function searchGiphy(q, limit) {
         limit,
     });
 
+    
+
     return res.data.map((gif) => {
+        const date = new Date(gif.create_datetime || gif.import_datetime).toDateString();
         return {
             title: gif.title,
             image: gif.images.original.url,
@@ -116,7 +128,7 @@ async function searchGiphy(q, limit) {
             user_name: gif.user?.username,
             user_display_name: gif.user?.display_name,
             user_url: gif.user?.profile_url,
-            created_at: gif.create_datetime || gif.import_datetime,
+            created_at: date,
             source: "giphy",
         };
     });
@@ -145,14 +157,16 @@ async function searchTwitter(q, limit) {
     });
 
     return res.statuses.map((tweet) => {
+        const date = new Date(tweet.created_at).toDateString();
         return {
             body: tweet.text,
             url: `https://twitter.com/${tweet.user.screen_name}/status/${tweet.id_str}`,
             user_name: tweet.user.screen_name,
             user_display_name: tweet.user.name,
             user_url: tweet.user.url,
+            user_image: tweet.user.profile_image_url_https,
             image: tweetImage(tweet),
-            created_at: tweet.created_at,
+            created_at: date,
             source: "twitter",
         };
     });
@@ -171,6 +185,8 @@ function dedup(sources) {
 }
 
 app.get("/api/search", async (req, res) => {
+    console.log(req.query.q)
+
     const query = [].concat(req.query.q);
 
     let sources = Object.keys(searchers);
@@ -183,7 +199,7 @@ app.get("/api/search", async (req, res) => {
     const data = await Promise.all(
         sources.map((src) => {
             if (searchers[src]) {
-                return searchers[src](query[0], 10).catch((err) => {
+                return searchers[src](query[0], 9).catch((err) => {
                     console.log(err);
                 });
             }
