@@ -32,9 +32,15 @@ textarea:focus {
 /*************** Column *******************/
 
 .logo-column {
-    height: 30px;
+    height: 40px;
     width: auto;
-    padding-left: 5px;
+    margin: 10px 0;
+}
+
+.logo-grid {
+    height: 40px;
+    width: auto;
+    margin: 10px 0;
 }
 
 .container {
@@ -127,6 +133,15 @@ a {
     border: 1px white solid;
     float: left;
     margin-left: 20px;
+}
+
+/*********** Grid *****************/
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-items: center;
+    align-items: top;
+    width: auto;
 }
 
 /**

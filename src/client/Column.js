@@ -10,7 +10,7 @@ export default function Column({ cards, source }) {
     const [gridLinkURL, setGridLinkURL] = useState("/grid");
 
     useEffect(() => {
-        setLogoSource(`src/client/${source}-logo.png`);
+        setLogoSource(`/public/${source}-logo.png`);
         setCardClassName(`card ${source}`);
         setGridLinkURL(`/grid/${source}`);
 

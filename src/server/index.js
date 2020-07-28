@@ -23,8 +23,6 @@ async function searchNYT(q, limit) {
         console.log(err);
     }
 
-    
-
     const response = result.data.response.docs.map((article) => {
         const date = new Date(article?.pub_date).toDateString();
 
@@ -89,9 +87,8 @@ async function searchGoodReads(q, limit) {
         ]
             .filter((a) => a)
             .join("-");
-        
-        const normalisedDate = new Date(date).toDateString();
 
+        const normalisedDate = new Date(date).toDateString();
 
         return {
             body: book.best_book.title,
@@ -100,7 +97,7 @@ async function searchGoodReads(q, limit) {
             user_display_name: book.best_book.author.name,
             user_url: `https://www.goodreads.com/author/show/${book.best_book.author.id._}`,
             created_at: normalisedDate,
-            source: "goodreads",
+            source: "goodReads",
         };
     });
 
@@ -117,10 +114,10 @@ async function searchGiphy(q, limit) {
         limit,
     });
 
-    
-
     return res.data.map((gif) => {
-        const date = new Date(gif.create_datetime || gif.import_datetime).toDateString();
+        const date = new Date(
+            gif.create_datetime || gif.import_datetime
+        ).toDateString();
         return {
             title: gif.title,
             image: gif.images.original.url,
@@ -185,7 +182,7 @@ function dedup(sources) {
 }
 
 app.get("/api/search", async (req, res) => {
-    console.log(req.query.q)
+    console.log(req.query.q);
 
     const query = [].concat(req.query.q);
 

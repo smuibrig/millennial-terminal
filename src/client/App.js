@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { BrowserRouter, Route } from "react-router-dom";
+import React, { useState } from "react";
+import { BrowserRouter, Route, useLocation, useEffect } from "react-router-dom";
 import "./app.css";
 import ColumnsPage from "./ColumnsPage";
 import GridPage from "./GridPage";

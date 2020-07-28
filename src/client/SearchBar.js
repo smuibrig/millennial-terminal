@@ -1,19 +1,20 @@
 import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import "./app.css";
 import axios from "axios";
 
-export default function SearchBar({ query, setQuery, data, setData }) {
-    const [twitter, setTwitter] = useState(null);
-    const [giphy, setGiphy] = useState(null);
-    const [goodReads, setGoodreads] = useState(null);
-    const [NYC, setNYC] = useState(null);
-    const [movieDB, setMovieDB] = useState(null);
+export default function SearchBar({ data, setData, query, setQuery }) {
+    const [source, setSource] = useState("");
+    const location = useLocation();
 
     useEffect(() => {
-        const sources = [twitter, giphy, goodReads, NYC, movieDB].filter(
-            (a) => a
-        );
+        if (location) {
+            const urlQuery = new URLSearchParams(location.search);
+            setQuery(urlQuery.get("q"));
+        }
+    }, [location]);
 
+    useEffect(() => {
         const timer = setTimeout(() => {
             if (query) {
                 let result;
@@ -22,7 +23,7 @@ export default function SearchBar({ query, setQuery, data, setData }) {
                         result = await axios.get("/api/search", {
                             params: {
                                 q: query,
-                                sources,
+                                sources: source,
                             },
                         });
                     } catch (err) {
@@ -44,6 +45,7 @@ export default function SearchBar({ query, setQuery, data, setData }) {
             type="text"
             placeholder="Search"
             autoComplete="off"
+            value={query}
             onChange={(e) => setQuery(e.target.value)}
         />
     );
