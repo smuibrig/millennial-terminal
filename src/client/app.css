@@ -38,7 +38,7 @@ textarea:focus {
 }
 
 .logo-grid {
-    height: 40px;
+    height: 45px;
     width: auto;
     margin: 10px 0;
 }
@@ -64,13 +64,6 @@ textarea:focus {
     margin: 4px;
 }
 
-.tick-boxes {
-    display: flex;
-    justify-content: space-evenly;
-    color: rgba(108, 108, 108);
-    font-size: 20px;
-    margin: 20px 0;
-}
 
 /************* Card  ************/
 
@@ -83,8 +76,8 @@ textarea:focus {
     flex: 1;
     border-bottom: solid rgba(108, 108, 108) 1px;
     box-shadow: 2px 2px 2px 1px rgba(240, 239, 239, 0.2);
-    min-height: 300px;
     padding: 10px;
+    width: 100%;
 }
 
 .card img {
@@ -93,8 +86,8 @@ textarea:focus {
     object-fit: cover;
 }
 
-.giphy img {
-    width: 100%;
+#giphy img {
+    width: 95%;
     height: auto;
 }
 
@@ -112,12 +105,14 @@ a {
     color: white;
     font-size: 25px;
     text-align: center;
+    padding: 20px;
 }
 
 .body {
     color: rgb(198, 198, 198);
     font-size: 19px;
     text-align: justify;
+    width: 90%;
     padding: 20px;
 }
 
@@ -135,6 +130,9 @@ a {
     margin-left: 20px;
 }
 
+#goodReads .body {
+    text-align: center;
+}
 /*********** Grid *****************/
 .grid-container {
     display: grid;

@@ -90,14 +90,14 @@ async function searchGoodReads(q, limit) {
             .filter((a) => a)
             .join("-");
 
-        const normalisedDate = new Date(date).toDateString();
+        const normalisedDate = new Date(date).toDateString();   
 
         return {
             id: book.best_book.id._,
-            body: book.best_book.title,
+            body: book.best_book.author.name,
             image: book.best_book.image_url,
             url: `https://www.goodreads.com/book/show/${book.best_book.id._}`,
-            user_display_name: book.best_book.author.name,
+            user_display_name: book.best_book.title,
             user_url: `https://www.goodreads.com/author/show/${book.best_book.author.id._}`,
             created_at: normalisedDate,
             source: "goodReads",

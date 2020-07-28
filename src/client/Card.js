@@ -6,9 +6,11 @@ export default function Card({ card, index, source }) {
     const cardClassName = `card ${source}`;
     const cardURL = `/card/${source}/${card.id}`;
 
+    console.log(source); 
+
     return (
         (card && (
-            <div className={cardClassName} key={index}>
+            <div className={cardClassName} id={source} key={index}>
                 <a href={card.url} target="_blank" rel="noreferrer">
                     {card.image && <img src={card.image} alt="" />}
                 </a>
@@ -32,9 +34,9 @@ export default function Card({ card, index, source }) {
                     </a>
                 )}
 
-                <a href={card.url} target="_blank" rel="noreferrer">
+                {source !== "giphy" && <a href={card.url} target="_blank" rel="noreferrer">
                     <p className="body">{card.body}</p>
-                </a>
+                </a>}
 
                 <Link to={cardURL}>
                     <p className="created-at">{card.created_at}</p>

@@ -10,6 +10,10 @@ export default function CardPage({ data }) {
 
     return (
         <div className="container">
+            <Link to="/">
+                <img src={logoSource} className="logo-card" alt="Source logo" />
+            </Link>
+
             <div className="card-container">
                 <Card card={card} source={source} />
             </div>
