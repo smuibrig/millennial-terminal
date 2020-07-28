@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/interactive-supports-focus */
 import React, { useState, useEffect } from "react";
-import { useParams, Link, useLocation } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 
 import SearchBar from "./SearchBar";
 import Card from "./Card";
@@ -37,5 +37,3 @@ export default function GridPage({ query, setQuery, data, setData }) {
         </div>
     );
 }
-
-

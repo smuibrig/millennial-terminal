@@ -1,16 +1,25 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import "./app.css";
 import axios from "axios";
 
-export default function SearchBar({ data, setData, query, setQuery }) {
-    const [source, setSource] = useState("");
+export default function SearchBar({
+    data,
+    setData,
+    query = "",
+    setQuery,
+    source,
+}) {
     const location = useLocation();
 
     useEffect(() => {
         if (location) {
             const urlQuery = new URLSearchParams(location.search);
-            setQuery(urlQuery.get("q"));
+            const q = urlQuery.get("q");
+
+            if (q !== "") {
+                setQuery(q);
+            }
         }
     }, [location]);
 

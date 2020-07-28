@@ -3,6 +3,7 @@ import { BrowserRouter, Route, useLocation, useEffect } from "react-router-dom";
 import "./app.css";
 import ColumnsPage from "./ColumnsPage";
 import GridPage from "./GridPage";
+import CardPage from "./CardPage";
 
 export default function App(props) {
     const [query, setQuery] = useState("");
@@ -34,6 +35,11 @@ export default function App(props) {
                             setData={setData}
                         />
                     )}
+                />
+                <Route
+                    exact
+                    path="/card/:source/:id"
+                    render={() => <CardPage data={data} />}
                 />
             </BrowserRouter>
         </div>

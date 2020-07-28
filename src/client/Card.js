@@ -1,17 +1,10 @@
 /* eslint-disable jsx-a11y/interactive-supports-focus */
-import React, { useState, useEffect } from "react";
+import React from "react";
+import { Link } from "react-router-dom";
 
 export default function Card({ card, index, source }) {
-    const [cardClassName, setCardClassName] = useState("card");
-    const [twitter, setTwitter] = useState(false);
-
-    useEffect(() => {
-        setCardClassName(`card ${source}`);
-
-        if (source === "twitter") {
-            setTwitter(true);
-        }
-    }, [source, card]);
+    const cardClassName = `card ${source}`;
+    const cardURL = `/card/${source}/${card.id}`;
 
     return (
         (card && (
@@ -20,7 +13,7 @@ export default function Card({ card, index, source }) {
                     {card.image && <img src={card.image} alt="" />}
                 </a>
 
-                {twitter && (
+                {source === "twitter" && (
                     <div>
                         <a href={card.user_url}>
                             <img
@@ -33,7 +26,7 @@ export default function Card({ card, index, source }) {
                     </div>
                 )}
 
-                {!twitter && (
+                {source !== "twitter" && (
                     <a href={card.user_url}>
                         <p className="name">{card.user_display_name}</p>
                     </a>
@@ -43,7 +36,9 @@ export default function Card({ card, index, source }) {
                     <p className="body">{card.body}</p>
                 </a>
 
-                <p className="created-at">{card.created_at}</p>
+                <Link to={cardURL}>
+                    <p className="created-at">{card.created_at}</p>
+                </Link>
             </div>
         )) || (
             <div className={cardClassName} key={index}>

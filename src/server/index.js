@@ -27,6 +27,7 @@ async function searchNYT(q, limit) {
         const date = new Date(article?.pub_date).toDateString();
 
         return {
+            id: article?.uri,
             body: article?.abstract,
             image: `https://www.nytimes.com/${article?.multimedia[0]?.url}`,
             url: article?.web_url,
@@ -54,6 +55,7 @@ async function searchMovieDB(q, limit) {
     const result = movies.map((movie) => {
         const date = new Date(movie.release_date).toDateString();
         return {
+            id: movie.id,
             body: movie.overview,
             image: `https://image.tmdb.org/t/p/original${movie.poster_path}`,
             url: `https://www.themoviedb.org/movie/${movie.id}`,
@@ -91,6 +93,7 @@ async function searchGoodReads(q, limit) {
         const normalisedDate = new Date(date).toDateString();
 
         return {
+            id: book.best_book.id._,
             body: book.best_book.title,
             image: book.best_book.image_url,
             url: `https://www.goodreads.com/book/show/${book.best_book.id._}`,
@@ -119,6 +122,7 @@ async function searchGiphy(q, limit) {
             gif.create_datetime || gif.import_datetime
         ).toDateString();
         return {
+            id: gif.id,
             title: gif.title,
             image: gif.images.original.url,
             url: gif.url,
@@ -156,6 +160,7 @@ async function searchTwitter(q, limit) {
     return res.statuses.map((tweet) => {
         const date = new Date(tweet.created_at).toDateString();
         return {
+            id: tweet.id_str,
             body: tweet.text,
             url: `https://twitter.com/${tweet.user.screen_name}/status/${tweet.id_str}`,
             user_name: tweet.user.screen_name,
@@ -188,7 +193,7 @@ app.get("/api/search", async (req, res) => {
 
     let sources = Object.keys(searchers);
     if (req.query.sources && req.query.sources.length > 0) {
-        sources = dedup(req.query.sources);
+        sources = dedup([].concat(req.query.sources));
     }
 
     sources.sort();
