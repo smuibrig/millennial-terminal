@@ -6,12 +6,16 @@ import Card from "./Card";
 export default function CardPage({ data }) {
     const { source, id } = useParams();
     const logoSource = `/public/${source}-logo.png`;
-    const card = data[source].find((c) => c.id === id);
+    const card = data[source].find((c) => c.id.toString() === id);
 
     return (
-        <div className="container">
+        <div className="container flex-column">
             <Link to="/">
-                <img src={logoSource} className="logo-card" alt="Source logo" />
+                <img
+                    src={logoSource}
+                    className="logo-column"
+                    alt="Source logo"
+                />
             </Link>
 
             <div className="card-container">

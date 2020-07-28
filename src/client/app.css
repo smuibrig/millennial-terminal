@@ -37,6 +37,17 @@ textarea:focus {
     margin: 10px 0;
 }
 
+.flex-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.card-conatainer {
+    max-width: 450px;
+}
+
+
 .logo-grid {
     height: 45px;
     width: auto;
@@ -54,9 +65,6 @@ textarea:focus {
     flex: 1;
 }
 
-#hide {
-    display: none;
-}
 
 .header {
     display: flex;
@@ -82,7 +90,7 @@ textarea:focus {
 
 .card img {
     width: 95%;
-    max-height: 400px;
+    max-height: 300px;
     object-fit: cover;
 }
 

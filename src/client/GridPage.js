@@ -22,17 +22,27 @@ export default function GridPage({ query, setQuery, data, setData }) {
                 data={data}
                 setData={setData}
             />
-            <Link to="/">
-                <img src={logoSource} className="logo-grid" alt="Source logo" />
-            </Link>
+            <div className="flex-column">
+                <Link to="/">
+                    <img
+                        src={logoSource}
+                        className="logo-grid"
+                        alt="Source logo"
+                    />
+                </Link>
 
-            <div className="grid-container">
-                {Object.values(data)
-                    .flat()
-                    .filter((card) => card.source === source)
-                    .map((card, index) => (
-                        <Card card={card} source={card.source} key={index} />
-                    ))}
+                <div className="grid-container">
+                    {Object.values(data)
+                        .flat()
+                        .filter((card) => card.source === source)
+                        .map((card, index) => (
+                            <Card
+                                card={card}
+                                source={card.source}
+                                key={index}
+                            />
+                        ))}
+                </div>
             </div>
         </div>
     );
