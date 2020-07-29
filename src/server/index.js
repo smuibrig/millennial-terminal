@@ -90,7 +90,7 @@ async function searchGoodReads(q, limit) {
             .filter((a) => a)
             .join("-");
 
-        const normalisedDate = new Date(date).toDateString();   
+        const normalisedDate = new Date(date).toDateString();
 
         return {
             id: book.best_book.id._,
@@ -187,8 +187,6 @@ function dedup(sources) {
 }
 
 app.get("/api/search", async (req, res) => {
-    console.log(req.query.q);
-
     const query = [].concat(req.query.q);
 
     let sources = Object.keys(searchers);
