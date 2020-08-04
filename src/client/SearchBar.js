@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import "./app.css";
 import axios from "axios";
@@ -20,16 +20,15 @@ export default function SearchBar({ data, setData, query, setQuery, source }) {
     useEffect(() => {
         const timer = setTimeout(async () => {
             (async () => {
-                const q = query || "cat";
-                const sources = [source].filter((s) => s);
+                if (!query || query === "") {
+                    return;
+                }
 
                 let result;
-
                 try {
                     result = await axios.get("/api/search", {
                         params: {
-                            q,
-                            sources,
+                            q: query,
                         },
                     });
                 } catch (err) {

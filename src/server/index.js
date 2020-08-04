@@ -25,9 +25,8 @@ async function searchNYT(q, limit) {
 
     const response = result.data.response.docs.map((article) => {
         const date = new Date(article?.pub_date).toDateString();
-
         return {
-            id: article?.uri,
+            id: article?.pub_date,
             body: article?.abstract,
             image: `https://www.nytimes.com/${article?.multimedia[0]?.url}`,
             url: article?.web_url,
