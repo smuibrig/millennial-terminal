@@ -150,10 +150,11 @@ function tweetImage(tweet) {
     return "";
 }
 
-async function searchTwitter(q, limit) {
+async function searchTwitter(q, limit, offset) {
     const res = await twitterClient.get("search/tweets", {
         q,
         count: limit,
+        max_id: offset, 
     });
 
     return res.statuses.map((tweet) => {
@@ -186,6 +187,7 @@ function dedup(sources) {
 }
 
 app.get("/api/search", async (req, res) => {
+   
     const query = [].concat(req.query.q);
 
     let sources = Object.keys(searchers);

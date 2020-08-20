@@ -13,7 +13,7 @@ export default function ColumnsPage({ query, setQuery, data, setData }) {
                 setData={setData}
             />
             {Object.entries(data).map(([source, cards], index) => (
-                <Column cards={cards} source={source} key={index} />
+                <Column query={query} cardData={cards} source={source} key={index} />
             ))}
         </div>
     );
