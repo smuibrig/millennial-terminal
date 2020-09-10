@@ -35,4 +35,4 @@ yarn build (or npm run build)
 yarn start (or npm start)
 
 ```
-This web app uses [simple-react-full-stack](https://github.com/crsandeep/simple-react-full-stack).
+This project was bootstrapped by [simple-react-full-stack](https://github.com/crsandeep/simple-react-full-stack).
